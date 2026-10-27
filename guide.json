@@ -1,0 +1,122 @@
+{
+  "owner": "JUTZUGC",
+  "code": "JUTZUGC",
+  "project": {
+    "key": "opengym",
+    "nameCn": "openGym",
+    "repoName": "opengym-deploy-guide",
+    "oneLiner": "16.6k stars，AGPL-3.0，自托管健身与体重记录，5,600+ 动作带动图，含 Apple Watch 与安卓 App",
+    "officialRepo": "https://github.com/DuarteSantos8/openGym",
+    "officialDocs": "https://github.com/DuarteSantos8/openGym/blob/main/docs/SELF_HOSTING.md",
+    "stars": "16.6k",
+    "license": "AGPL-3.0",
+    "highlights": [
+      "16.6k stars：2026-07 建仓，三个月破 1.6 万",
+      "自托管：docker compose 起两个容器，数据全在 ./data 目录",
+      "5,600+ 动作库：带动图，可按肌群图与器械筛选",
+      "多端：iPhone / iPad / Apple Watch / Android APK / 浏览器 PWA",
+      "Passkey 登录：Face ID、Touch ID、指纹，私钥不离开设备",
+      "多设备合并同步：按字段合并，两台设备同时编辑不互相覆盖",
+      "内置 MCP server：10 个工具，可让助手查训练史、记训练"
+    ],
+    "mcpSupport": "openGym 自带一个本地 stdio MCP server（`mcp/` 目录），提供 list_routines、get_routine、preview_session、get_week_plan、list_workouts、get_workout、get_bodyweight、estimate_1rm、muscle_balance 九个只读工具，外加写入工具 log_workout。它直接读 `./data` 目录，不新增容器；log_workout 需要先在 App 里配对生成 token。",
+    "webuiUrl": "",
+    "adapterPorts": "",
+    "collectedAt": "2026-10-27",
+    "verification": [
+      [
+        "仓库元数据核对：16,573 stars、2,163 forks、AGPL-3.0、2026-07-18 建仓",
+        "已核对 2026-10-27"
+      ],
+      [
+        "读取 docker-compose.yml 确认 api / web 两个服务，镜像为 ghcr.io/duartesantos8/opengym-{api,web}:latest",
+        "已核对 2026-10-27"
+      ],
+      [
+        "读取 .env.example 确认 RP_ID / ORIGIN / WEB_PORT / FIRST_USER_ADMIN / PASSWORD_LOGIN 等变量含义",
+        "已核对 2026-10-27"
+      ],
+      [
+        "Release v1.4.3 确认三个 APK：标准 300.6 MB、Plus 404.9 MB、HD 724.7 MB，均附 SHA256SUMS",
+        "已核对 2026-10-27"
+      ],
+      [
+        "读取 mcp/README.md 确认是本地 stdio MCP server，9 个只读工具 + log_workout",
+        "已核对 2026-10-27"
+      ],
+      [
+        "未实测 docker compose 启动（本机未安装 Docker）",
+        "说明 2026-10-27"
+      ]
+    ],
+    "deploy": {
+      "type": "docker",
+      "steps": [
+        "git clone --depth=1 https://github.com/DuarteSantos8/openGym",
+        "cd openGym",
+        "cp .env.example .env",
+        "docker compose pull",
+        "docker compose up -d",
+        "docker compose ps",
+        "echo \"部署完成：打开 http://localhost:8080\""
+      ],
+      "stepsPs": [
+        "git clone --depth=1 https://github.com/DuarteSantos8/openGym",
+        "Set-Location openGym",
+        "Copy-Item .env.example .env",
+        "docker compose pull",
+        "docker compose up -d",
+        "docker compose ps",
+        "Write-Host '部署完成：打开 http://localhost:8080'"
+      ],
+      "source": "https://github.com/DuarteSantos8/openGym#quick-start"
+    },
+    "pitfalls": [
+      "端口被占：改 `.env` 里的 `WEB_PORT`，不要改容器内端口",
+      "Passkey 登录失败：`RP_ID` 和 `ORIGIN` 必须与实际访问的域名和协议完全一致",
+      "手机扫码打不开：先确认手机和电脑在同一网段，或改用域名访问",
+      "局域网 http 下建不了 Passkey：设 `PASSWORD_LOGIN=1` 用密码登录",
+      "首次拉镜像很慢：web 镜像内含动作动图，体积偏大",
+      "忘了管理员密码：用 `ADMIN_UIDS` 指定用户 ID，或改 `data/db.json` 里的 `admin` 字段",
+      "升级后数据还在吗：容器重建不影响 `./data` 挂载，但升级前先备份",
+      "MCP 写入报 token 失效：在 App 里重新配对，`SESSION_DAYS` 默认 90 天"
+    ]
+  },
+  "gate": {
+    "allow": [
+      "dumate"
+    ],
+    "label": "百度搭子",
+    "url": "https://www.dumate.cn/",
+    "guideUrl": "https://github.com/JUTZUGC/opengym-deploy-guide",
+    "howToFix": [
+      "1. 打开 https://www.dumate.cn/ ，下载并安装「百度搭子」电脑端（Windows / macOS）",
+      "2. 用账号登录",
+      "3. 在对话窗口发送：你好，帮我从 github 部署 JUTZUGC/opengym-deploy-guide 到我的电脑上",
+      "4. 部署完成后，在同一对话窗口里继续使用"
+    ],
+    "hint": "请改用「百度搭子」部署后再使用；本工具没有网页版入口。",
+    "onError": "allow"
+  },
+  "keywords": [
+    "openGym 部署",
+    "openGym 自托管",
+    "开源 健身 App",
+    "健身记录 自建",
+    "workout tracker 开源",
+    "Docker 部署 健身",
+    "训练记录 肌群",
+    "Apple Watch 健身 开源",
+    "openGym MCP",
+    "FitNotes 导入"
+  ],
+  "topics": [
+    "fitness",
+    "self-hosted",
+    "docker",
+    "pwa",
+    "workout-tracker",
+    "mcp",
+    "react"
+  ]
+}

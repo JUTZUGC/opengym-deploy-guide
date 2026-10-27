@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "opengym-guide": {
+      "command": "node",
+      "args": [
+        "mcp-server.mjs"
+      ]
+    }
+  }
+}
